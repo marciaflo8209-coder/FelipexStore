@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+:root{
+  --bg:#050507;
+  --card:#0f0f12;
+  --neon-p:#ff004d;
+  --neon-b:#00bfff;
+  --muted:#9aa0a6;
+}
+
+html,body,#__next { height:100%; }
+
+body{
+  margin:0;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(180deg,#050507 0%, #090912 100%);
+  color: #fff;
+}
+
+.btn {
+  padding: .6rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.6);
+  border:none;
+  cursor:pointer;
+}
+
+.btn-neon {
+  background: linear-gradient(90deg,var(--neon-p),var(--neon-b));
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,0,77,.6);
+}
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  padding: 1rem;
+}
