@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int       @id @default(autoincrement())
+  username       String    @unique
+  email          String?   @unique
+  passwordHash   String
+  role           String    @default("user") // user | admin | creator
+  balanceCents   BigInt    @default(0)
+  createdAt      DateTime  @default(now())
+  orders         Order[]
+  transactions   Transaction[]
+  sessions       Session[]
+  deleted        Boolean   @default(false)
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  priceCents  Int
+  createdAt   DateTime @default(now())
+}
+
+model Order {
+  id         Int       @id @default(autoincrement())
+  user       User      @relation(fields: [userId], references: [id])
+  userId     Int
+  totalCents Int
+  status     String    @default("paid")
+  createdAt  DateTime  @default(now())
+  items      OrderItem[]
+}
+
+model OrderItem {
+  id         Int @id @default(autoincrement())
+  order      Order @relation(fields: [orderId], references: [id])
+  orderId    Int
+  productId  Int
+  title      String
+  unitPrice  Int
+  quantity   Int
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  amountCents Int
+  type        String   // topup | purchase | admin_adjust | refund
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model Session {
+  id        Int     @id @default(autoincrement())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  token     String
+  ip        String?
+  ua        String?
+  createdAt DateTime @default(now())
+}
